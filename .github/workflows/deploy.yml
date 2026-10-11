@@ -24,12 +24,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Combined step installs Node 20 + pnpm with safety caching built in
-      - name: Install pnpm and Node.js
-        uses: pnpm/setup@v3
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 9
-          runtime: node@20
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile

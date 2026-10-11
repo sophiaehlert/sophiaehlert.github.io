@@ -2,7 +2,7 @@ name: Deploy Vite Site to Main Pages Root
 
 on:
   push:
-    branches: ["main"] # Double check if your branch is named main or master
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -18,7 +18,7 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.pages-deploy-step.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,7 +30,7 @@ jobs:
           version: 9
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/node-versions@v4
         with:
           node-version: 20
 
@@ -46,8 +46,5 @@ jobs:
           path: './dist' 
 
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-      - name: Deploy to GitHub Pages
-        id: deployment
+        id: pages-deploy-step
         uses: actions/deploy-pages@v4
